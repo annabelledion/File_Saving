@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  * Created by DioAn1730700 on 2018-01-22.
  */
-public class Entreprise {
+public class Entreprise implements Serializable {
 
     private String nom;
     private Adresse adresseEn;
@@ -32,7 +33,7 @@ public class Entreprise {
 
         System.out.println("Entreprise :");
         System.out.println("    Nom :");
-        entreprise.nom = sc.next();
+        entreprise.nom = Main.caractere();
         Adresse adresse  = Adresse.addAdresse();
         entreprise.setAdresseEn(adresse);
 
@@ -49,11 +50,10 @@ public class Entreprise {
 
         System.out.println("Entreprise :");
         System.out.println("    Nom (" + getNom() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setNom(modif);}
         getAdresseEn().modifAdresse();
     }
-
 
 }

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +7,7 @@ import java.util.Scanner;
 /**
  * Created by DioAn1730700 on 2018-01-22.
  */
-public class Contact {
+public class Contact implements Serializable{
 
     private String prenom;
     private String nom;
@@ -85,11 +86,11 @@ public class Contact {
         System.out.println("Ce contact sera entré à la position #" + positionContact + ".");
         System.out.println("Veuillez entrer les informations suivantes :");
         System.out.println("Prénom : ");
-        contact.prenom = sc.next();
+        contact.prenom = Main.caractere().toLowerCase();
         System.out.println("Nom :");
-        contact.nom = sc.next();
-        Adresse adresse  = Adresse.addAdresse();
-        contact.setAdresse(adresse);
+        contact.nom = Main.caractere();
+            Adresse adresse  = Adresse.addAdresse();
+            contact.setAdresse(adresse);
         Occupation occupation = Occupation.addOccupation();
         contact.setOccupation(occupation);
         boolean ajoutTel = true;
@@ -104,6 +105,9 @@ public class Contact {
 
             } else if (choixTel == 2) {
                 ajoutTel = false;
+            } else if (choixTel >= 3){
+                System.out.println("Entrez un nombre entre 1 et 2");
+                ajoutTel = true;
             }
         }
         return contact;
@@ -115,13 +119,13 @@ public class Contact {
 
         String modif;
 
-        System.out.println("Veuillez entrer les informations suivantes (laisser vide si correct) :");
+        System.out.println("Veuillez entrer les informations suivantes (***Entrez un espace*** si correct) :");
         System.out.println("Prénom (" + getPrenom() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setPrenom(modif);}
         System.out.println("Nom (" + getNom() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setNom(modif);}
         getAdresse().modifAdresse();
@@ -154,5 +158,6 @@ public class Contact {
            telephone.afficherTelephone();
         }
     }
+
 
 }

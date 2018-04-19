@@ -1,9 +1,10 @@
 
+import java.io.Serializable;
 import java.util.Scanner;
 /**
  * Created by DioAn1730700 on 2018-01-22.
  */
-public class Adresse {
+public class Adresse implements Serializable {
 
     private int numPorte;
     private String rue;
@@ -62,31 +63,35 @@ public class Adresse {
 
     public static Adresse addAdresse() {
 
-        Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
 
-        Adresse adresse = new Adresse();
+            Adresse adresse = new Adresse();
 
-        String modif;
+            String modif;
 
-        System.out.println("Adresse :");
-        System.out.println("    Numéro de porte : ");
-        adresse.numPorte = sc.nextInt();
-        System.out.println("    Rue : ");
-        adresse.rue = sc.next();
-        System.out.println("    Appartement (falcultatif) :");
-        sc.nextLine();
-        modif = sc.nextLine().trim();
-        if (modif.equals("")) {
-        } else {adresse.numAppart = modif;}
+            System.out.println("Adresse :");
+            System.out.println("    Numéro de porte : ");
+            adresse.numPorte =  demanderNombre();
+            System.out.println("    Rue : ");
+            adresse.rue = Main.caractere();
+            System.out.println("    Appartement (facultatif) :");
+            modif = sc.nextLine().trim();
+            if (modif.equals("")) {
+            } else {
+                adresse.numAppart = modif;
+            }
             System.out.println("    Ville :");
-            adresse.ville = sc.next();
-            System.out.println("    Province :");
-            adresse.province = sc.next();
+            adresse.ville = Main.caractere();
             System.out.println("    Pays :");
-            adresse.pays = sc.next();
+            adresse.pays = pays();
+            System.out.println("    Province :");
+        if (adresse.pays.equals("canada")) {
+            adresse.province = provinces();
+        } else
+            adresse.province = Main.caractere();
 
             return adresse;
-    }
+        }
 
     public void afficherAdresse(){
 
@@ -103,14 +108,17 @@ public class Adresse {
 
         Scanner sc = new Scanner(System.in);
         String modif;
+        int modif2 = 0;
 
         System.out.println("Adresse :");
         System.out.println("    Numéro de porte (" + getNumPorte() + ") : ");
-        modif = sc.nextLine().trim();
-        if (modif.equals("")) {
-        } else {setNumPorte(Integer.parseInt(modif));}
+        System.out.println();
+        modif2 = demanderNombre();
+        if (modif2 < 0) {
+        } else {
+            setNumPorte(modif2);}
         System.out.println("    Rue : (" + getRue() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setRue(modif);}
         System.out.println("    Appartement (" + getNumAppart() + ") : ");
@@ -118,17 +126,71 @@ public class Adresse {
         if (modif.equals("")) {
         } else {setNumAppart(modif);}
         System.out.println("    Ville (" + getVille() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setVille(modif);}
         System.out.println("    Province (" + getProvince() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setProvince(modif);}
         System.out.println("    Pays (" + getPays() + ") : ");
-        modif = sc.nextLine().trim();
+        modif = Main.caractere().trim();
         if (modif.equals("")) {
         } else {setPays(modif);}
+    }
+
+    public static int demanderNombre() {
+
+        Scanner sc = new Scanner(System.in);
+        int nombre = 0;
+        while (true) {
+            String rep2 = sc.nextLine();
+            try {
+                nombre = Integer.parseInt(rep2);
+                return nombre;
+            }catch (NumberFormatException e){
+                System.out.println("Mauvais format! Entrez un chiffre ou un nombre");
+                System.out.println();
+            }
+
+        }
+    }
+
+    public static String pays() {
+        Scanner sc = new Scanner(System.in);
+        String tabPays[] = {"canada", "étas-unis", "chili", "mexique", "france", "espagne", "portugal", "italie", "australie", "maroc"};
+
+        while (true) {
+            String repPays = Main.caractere().toLowerCase();
+
+            for (int i = 0; i < tabPays.length; i++) {
+
+                if (tabPays[i].equals(repPays)) {
+                    return repPays;
+                } else if (i >= 9){
+                    System.out.println("Le pays n'existe pas. Réessayez");
+                }
+            }
+        }
+
+    }
+
+    public static String provinces(){
+        Scanner sc = new Scanner(System.in);
+        String tabProvinces[] = {"québec", "ontario", "colombie-britanique", "alberta", "manitoba", "nouvelle-écosse", "nouveau-brunswick",
+        "saskatchewan", "terre-neuve-et-labrador", "ile-du-prince-edouard"};
+
+        while (true) {
+            String repProvinces = Main.caractere().toLowerCase();
+            for (int i = 0; i < tabProvinces.length; i++) {
+                if (tabProvinces[i].equals(repProvinces)) {
+                    return repProvinces;
+                } else if (i >= 9){
+                    System.out.println("La Province n'existe pas. Réessayez");
+                    System.out.println();
+                }
+            }
+        }
     }
 }
 
